@@ -39,5 +39,5 @@ jobs:
 
 | Input Name | Required | Default | Description |
 |---|---|---|---|
-| `points` |  |  | Points string separated with a / slash. |
-| `path` |  |  | File path to save the generated SVG to. |
+| `points` | yes |  | Points string separated with a / slash. |
+| `path` | yes |  | File path to save the generated SVG to. |

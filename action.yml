@@ -5,8 +5,10 @@ description: "generates a points/progress SVG bar"
 inputs:
   points:
     description: "Points string separated with a / slash."
+    required: true
   path:
     description: "File path to save the generated SVG to."
+    required: true
 
 runs:
   using: "node12"
