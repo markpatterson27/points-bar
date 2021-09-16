@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/markpatterson27/points-bar/issues"
   },
-  "homepage": "https://github.com/markpatterson27/points-bar#readme"
+  "homepage": "https://github.com/markpatterson27/points-bar#readme",
+  "dependencies": {
+    "@actions/core": "^1.5.0"
+  }
 }
