@@ -2,6 +2,10 @@
 
 A GitHub action that creates an SVG points bar.
 
+<p align="center">
+    <img alt="points bar" height="36" src="../../blob/status/.github/icons/points-bar.svg" />
+</p>
+
 ## Usage
 
 ```yaml
