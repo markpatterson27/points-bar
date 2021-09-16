@@ -4,6 +4,8 @@
   "description": "A GitHub action that creates an SVG points bar.",
   "main": "dist/index.js",
   "scripts": {
+    "lint": "eslint .",
+    "build": "ncc build ./src/index.js -o dist --source-map --license licenses.txt",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,5 +21,9 @@
   "homepage": "https://github.com/markpatterson27/points-bar#readme",
   "dependencies": {
     "@actions/core": "^1.5.0"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.31.1",
+    "eslint": "^7.32.0"
   }
 }
