@@ -1,0 +1,20 @@
+{
+  "name": "points-bar",
+  "version": "1.0.0",
+  "description": "A GitHub action that creates an SVG points bar.",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/markpatterson27/points-bar.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/markpatterson27/points-bar/issues"
+  },
+  "homepage": "https://github.com/markpatterson27/points-bar#readme"
+}
