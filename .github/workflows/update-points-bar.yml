@@ -1,0 +1,39 @@
+name: Update Points Bar
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update:
+    name: Update points bar
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      # switch to status branch
+      - run: git checkout status || git checkout -b status
+
+      # generate random points
+      - name: random points
+        id: random-points
+        run: |
+            points=$((10 + $RANDOM % 80))"/100"
+            echo "::set-output name=points::$points"
+
+      # create points bar
+      - name: points bar
+        uses: markpatterson27/points-bar@v1
+        with:
+          points: ${{ steps.random-points.outputs.points }}
+          path: '.github/icons/points-bar.svg'
+
+      # commit and push activity icons if statuses have changed
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add '.github/icons/points-bar.svg'
+          git commit -m "Add/Update points bar" || exit 0
+          git push origin status
