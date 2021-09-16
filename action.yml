@@ -1,6 +1,5 @@
 name: "Points Bar"
-
-description: "generates a points/progress SVG bar"
+description: "Generates a points/progress SVG bar"
 
 inputs:
   points:
@@ -13,3 +12,7 @@ inputs:
 runs:
   using: "node12"
   main: "dist/index.js"
+
+branding:
+  icon: check
+  color: green
