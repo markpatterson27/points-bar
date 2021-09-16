@@ -1,0 +1,77 @@
+# make sure dist is up-to-date and automatically update major tags to latest revision tag SHA
+name: Publish
+
+on:
+  release:
+    types: [published, edited]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # set env
+      - name: Set env for major version and release branch
+        run: |
+          echo "MAJOR_TAG=$( cut -d '.' -f 1 <<< ${{ github.event.release.tag_name }} )" >> $GITHUB_ENV
+          echo "RELEASE_BRANCH=release/$( cut -d '.' -f 1 <<< ${{ github.event.release.tag_name }} )" >> $GITHUB_ENV
+
+      # check env set correctly
+      - name: Check env var
+        run: |
+          echo $MAJOR_TAG
+          echo $RELEASE_BRANCH
+      
+      # checkout full repo
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          fetch-depth: '0'
+      
+      - name: Config user name and email
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+      # checkout release branch or create if doesn't exist
+      - name: Check/Create release branch
+        run: git switch $RELEASE_BRANCH || git switch -c $RELEASE_BRANCH
+
+      # merge release tag
+      - name: Merge release branch with release tag
+        run: git merge ${{ github.event.release.tag_name }}
+            
+      # build dist
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 12
+      - name: Rebuild dist
+        run: |
+          npm ci
+          npm run build
+
+      # commit dist changes
+      - name: Commit dist changes
+        run: |
+          git add dist/
+          git commit -m "Update dist for release" || exit 0
+
+      # push new commit
+      - name: Push commits
+        run: git push origin $RELEASE_BRANCH
+
+      # update release and re-tag
+      - name: Update release tag
+        run: |
+          releasetag=${{ github.event.release.tag_name }}
+          tagmessage=$(git tag -l --format='%(contents)' $releasetag)
+          git tag -f -a $releasetag -m "$tagmessage"
+          git push origin $releasetag -f
+
+      # update major tag
+      - name: Update major tag
+        run: |
+          git tag -f -a $MAJOR_TAG -m "Updated $MAJOR_TAG tag"
+          git push origin $MAJOR_TAG -f
+          echo "Updated $MAJOR_TAG tag to point to ${{ github.event.release.tag_name }} tag."
