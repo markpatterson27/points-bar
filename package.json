@@ -2,7 +2,7 @@
   "name": "points-bar",
   "version": "1.0.0",
   "description": "A GitHub action that creates an SVG points bar.",
-  "main": "dist/index.js",
+  "main": "src/index.js",
   "directories": {
     "test": "tests"
   },
