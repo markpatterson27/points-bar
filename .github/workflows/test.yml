@@ -1,0 +1,45 @@
+name: "units-test"
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - 'releases/*'
+    paths:
+      - 'src/**'
+      - 'tests/**'
+  workflow_dispatch:
+
+jobs:
+  # unit tests
+  units:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 12
+    - run: npm ci
+    - run: npm test
+
+  # test action works running from the graph
+  integration-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 12
+    - run: npm ci
+    - run: npm run build
+
+    - name: action
+      uses: ./
+      with:
+        points: 50/100
+        path: .github/icons/points-bar.svg

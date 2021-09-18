@@ -1,5 +1,7 @@
 # Points Bar Action
 
+[![units-test](https://github.com/markpatterson27/points-bar/actions/workflows/test.yml/badge.svg)](https://github.com/markpatterson27/points-bar/actions/workflows/test.yml)
+
 A GitHub action that creates an SVG points bar.
 
 <p align="center">
