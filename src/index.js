@@ -1,4 +1,5 @@
-const core = require("@actions/core");
+const core = require('@actions/core');
+const pointsbar = require('./pointsbar');
 
 const fs = require("fs");
 
@@ -8,7 +9,7 @@ async function run() {
         const points = core.getInput("points");
         const path = core.getInput("path");
 
-        const pointsParts = points.split("/");
+        const pointsParts = pointsbar.splitPoints(points);
         const percentage = Math.floor((pointsParts[0] / pointsParts[1]) * 100);
 
         const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="120px" height="36px">
