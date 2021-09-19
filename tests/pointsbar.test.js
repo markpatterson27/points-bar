@@ -40,3 +40,55 @@ describe("splitPoints function", () => {
         expect(splitPoints(input)).toEqual(parts);
     });
 });
+
+// test templateSVG
+describe("templateSVG function", () => {
+    // test throws error if percentage not a number
+    test("not numbers throws error", () => {
+        const currentPoints = "15.4";
+        const maxPoints = "tree";
+
+        expect(() => {templateSVG(currentPoints, maxPoints);}).toThrow(TypeError);
+        expect(() => {templateSVG(currentPoints, maxPoints);}).toThrow("Can not calculate percentage from inputs");
+    });
+
+    // test points in SVG
+    // test percentage in SVG
+    test("points and percentage in SVG", () => {
+        for (let i = 0; i < 50; i++) {
+            const currentPoints = i.toString();
+            const maxPoints = "50";
+
+            const percentage = Math.min(Math.floor((currentPoints / maxPoints) * 100), 100);
+            const svg = templateSVG(currentPoints, maxPoints);
+
+            // expect(svg).toMatch(/(10\/50)/);
+            expect(svg).toContain(`>${currentPoints}/${maxPoints}<`);
+            expect(svg).toContain(`to="${percentage}%"`);
+        }
+    });
+
+    // // test percentage in SVG
+    // test("percentage in SVG", () => {
+    //     const currentPoints = "10";
+    //     const maxPoints = "50";
+
+    //     const percentage = Math.min(Math.floor((currentPoints / maxPoints) * 100), 100);
+    //     const svg = templateSVG(currentPoints, maxPoints);
+
+    //     expect(svg).toContain(`to="${percentage}%"`);
+    // });
+
+    // test percentage limited to 100
+    test("percentage in SVG limited to 100", () => {
+        for (let i = 0; i < 100; i+=10) {
+            const currentPoints = "100";
+            const maxPoints = i.toString();
+
+            const svg = templateSVG(currentPoints, maxPoints);
+
+            expect(svg).toContain(`to="100%"`);
+        }
+    });
+
+});
