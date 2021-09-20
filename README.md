@@ -1,5 +1,7 @@
 # Points Bar Action
 
+[![units-test](https://github.com/markpatterson27/points-bar/actions/workflows/test.yml/badge.svg)](https://github.com/markpatterson27/points-bar/actions/workflows/test.yml)
+
 A GitHub action that creates an SVG points bar.
 
 <p align="center">
@@ -28,13 +30,13 @@ jobs:
           points: '25/50'
           path: 'points-bar.svg'
 
-      # commit and push activity icons if statuses have changed
+      # commit and push points-bar if changed
       - name: Commit changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add 'points-bar.svg'
-          git commit -m "Add/Update activity icons" || exit 0
+          git commit -m "Add/Update points bar" || exit 0
           git push
 
 ```

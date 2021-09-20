@@ -2,11 +2,14 @@
   "name": "points-bar",
   "version": "1.0.0",
   "description": "A GitHub action that creates an SVG points bar.",
-  "main": "dist/index.js",
+  "main": "src/index.js",
+  "directories": {
+    "test": "tests"
+  },
   "scripts": {
     "lint": "eslint .",
     "build": "ncc build ./src/index.js -o dist --source-map --license licenses.txt",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -24,6 +27,7 @@
   },
   "devDependencies": {
     "@vercel/ncc": "^0.31.1",
-    "eslint": "^7.32.0"
+    "eslint": "^7.32.0",
+    "jest": "^27.2.0"
   }
 }
