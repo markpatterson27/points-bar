@@ -3,8 +3,8 @@ const pointsbar = require('./pointsbar');
 
 async function run() {
     try {
-        const points = core.getInput("points");
-        const filepath = core.getInput("path");
+        const points = core.getInput("points", {required: true});
+        const filepath = core.getInput("path", {required: true});
 
         const pointsParts = pointsbar.splitPoints(points);
 
@@ -17,4 +17,8 @@ async function run() {
     }
 }
 
-run();
+if (require.main === module) {
+  run();
+}
+
+module.exports = { run };
