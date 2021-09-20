@@ -61,8 +61,8 @@ describe("action interaction", () => {
     // test invalid path sets error
     const testPaths = [
         // path input, expected error response
-        ['dummy-path?/pointsbar.svg', 'Error creating directory'],
-        ['?pointsbar.svg', 'Error writing SVG file'],
+        ['dummy-path?*\0/pointsbar.svg', 'Error creating directory'],
+        ['!pointsbar[a-z]*\0.svg', 'Error writing SVG file'],
     ];
     test.each(testPaths)('invalid path throws error', (path, expected) => {
         // un-mock fs: need real write attempt to throw error

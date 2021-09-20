@@ -126,18 +126,6 @@ describe("writeSVGFile function", () => {
 
     });
 
-    // test invalid dir throws error
-    test("invalid dir throws error", () => {
-        // set up existsSync to meet the `if` condition
-        // fs.existsSync.mockReturnValue(false);
-        jest.spyOn(fs, 'existsSync').mockImplementation(() => {return false;});
-
-        const filePath = 'parent-dir(aaa|bbb)/?dir[a-z]/file.svg';
-
-        // Note: need real attempt to write dir to throw error
-        expect(() => {writeSVGFile(filePath, svg);}).toThrow('ENOENT');
-    });
-
     // test if dir not exist, create
     test("dir created", () => {
         // mock fs so file not written
@@ -156,13 +144,29 @@ describe("writeSVGFile function", () => {
         expect(fs.mkdirSync).toHaveBeenCalled();
     });
 
-    // test throws error if invalid filename in path
-    test("invalid filename throws error", () => {
-        const filePath = '[a-z]file?.svg';
+    // path invalid tests
+    // only run on windows as *nix is very permissive with characters allowed
+    if (process.platform == "win32") {
+        // test invalid dir throws error
+        test("invalid dir throws error", () => {
+            // set up existsSync to meet the `if` condition
+            // fs.existsSync.mockReturnValue(false);
+            jest.spyOn(fs, 'existsSync').mockImplementation(() => {return false;});
 
-        // Note: need real attempt to write dir to throw error
-        expect(() => {writeSVGFile(filePath, svg);}).toThrow('ENOENT');
-    });
+            const filePath = 'parent-dir(aaa|bbb)/?dir[a-z]/file.svg';
+
+            // Note: need real attempt to write dir to throw error
+            expect(() => {writeSVGFile(filePath, svg);}).toThrow('ENOENT');
+        });
+
+        // test throws error if invalid filename in path
+        test("invalid filename throws error", () => {
+            const filePath = '[a-z]file?.svg';
+
+            // Note: need real attempt to write dir to throw error
+            expect(() => {writeSVGFile(filePath, svg);}).toThrow('ENOENT');
+        });
+    }
 
     // test file written
     test("file written", () => {
