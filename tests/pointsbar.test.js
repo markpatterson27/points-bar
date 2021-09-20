@@ -1,4 +1,5 @@
-const { splitPoints } =  require('../src/pointsbar');
+const { splitPoints, templateSVG, writeSVGFile } =  require('../src/pointsbar');
+const fs = require('fs');
 
 // test splitPoints
 describe("splitPoints function", () => {
@@ -91,4 +92,90 @@ describe("templateSVG function", () => {
         }
     });
 
+});
+
+// test writeSVGFile
+describe("writeSVGFile function", () => {
+    beforeEach(() => {
+    });
+    afterEach(() => {
+        jest.clearAllMocks();
+        jest.restoreAllMocks();
+    });
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="120px" height="36px"></svg>`
+
+    // test throws error if file path not string
+    test("throws not string", () => {
+        const input = 5;
+        // expect(parseMatter(5)).toThrow('content not a string');
+        expect(() => {writeSVGFile(input, svg);}).toThrow(TypeError);
+        expect(() => {writeSVGFile(input, svg);}).toThrow("File path not a string");
+    });
+
+    // test warning given if no ext in filename
+    test("warning given if no ext", () => {
+        const filePath = 'dummy-path/filename';
+        jest.spyOn(console, 'log').mockImplementation(() => {});
+        // mock fs so file not written
+        jest.spyOn(fs, 'mkdirSync').mockImplementation(() => {});
+        jest.spyOn(fs, 'writeFileSync').mockImplementation(() => {});
+
+        writeSVGFile(filePath, svg);
+
+        expect(console.log).toHaveBeenCalledWith(`::warning::No ext in filename: ${filePath}`);
+
+    });
+
+    // test invalid dir throws error
+    test("invalid dir throws error", () => {
+        // set up existsSync to meet the `if` condition
+        // fs.existsSync.mockReturnValue(false);
+        jest.spyOn(fs, 'existsSync').mockImplementation(() => {return false;});
+
+        const filePath = 'parent-dir(aaa|bbb)/?dir[a-z]/file.svg';
+
+        // Note: need real attempt to write dir to throw error
+        expect(() => {writeSVGFile(filePath, svg);}).toThrow('ENOENT');
+    });
+
+    // test if dir not exist, create
+    test("dir created", () => {
+        // mock fs so file not written
+        jest.spyOn(fs, 'mkdirSync').mockImplementation(() => {});
+        jest.spyOn(fs, 'writeFileSync').mockImplementation(() => {});
+
+        const filePath = 'dummy-path/file.svg';
+
+        // set up existsSync to meet the `if` condition
+        // fs.existsSync.mockReturnValue(false);
+
+        // call writeSVGFile with dummy path
+        writeSVGFile(filePath, svg);
+
+        // make assertion
+        expect(fs.mkdirSync).toHaveBeenCalled();
+    });
+
+    // test throws error if invalid filename in path
+    test("invalid filename throws error", () => {
+        const filePath = '[a-z]file?.svg';
+
+        // Note: need real attempt to write dir to throw error
+        expect(() => {writeSVGFile(filePath, svg);}).toThrow('ENOENT');
+    });
+
+    // test file written
+    test("file written", () => {
+        // mock fs so file not written
+        jest.spyOn(fs, 'mkdirSync').mockImplementation(() => {});
+        jest.spyOn(fs, 'writeFileSync').mockImplementation(() => {});
+
+        const filePath = 'dummy-path/file.svg';
+
+        // call writeSVGFile with dummy path
+        // writeSVGFile(filePath, svg);
+
+        expect(() => {writeSVGFile(filePath, svg);}).not.toThrow(Error);
+        expect(fs.writeFileSync).toHaveBeenCalled();
+    });
 });
