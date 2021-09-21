@@ -30,15 +30,9 @@ function splitPoints(points) {
 }
 
 // returns svg string
-function templateSVG(currentPoints, maxPoints, styleOptions = {}) {
-    const style = {
-        fontFamily: '-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
-        fontColor: '#868E96',
-        barBackground: '#EEEEEE',
-        barColor: '#0170F0',
-        width: 120,
-        ...styleOptions
-    };
+function templateSVG(currentPoints, maxPoints, type = 'bar', styleOptions = {}) {
+    let style = {};
+    let svg = '';
 
     const points = `${currentPoints}/${maxPoints}`;
     const percentage = Math.min(Math.floor((currentPoints / maxPoints) * 100), 100);
@@ -48,19 +42,68 @@ function templateSVG(currentPoints, maxPoints, styleOptions = {}) {
         throw new TypeError("Can not calculate percentage from inputs");
     }
 
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="${style.width}px" height="36px">
+    switch(type) {
+        case 'badge':
+            style = {
+                fontFamily: 'Verdana, DejaVu Sans, sans-serif',
+                fontColor: '#FFFFFF',
+                barBackground: '#88BBCC',
+                barColor: '#11BBCC',
+                width: 140,
+                ...styleOptions
+            };
+            svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${style.width}px" height="20px" role="img" aria-label="Points: ${points}">
+    <title>Points: ${points}</title>
+    <linearGradient id="a" x2="0" y2="100%">
+        <stop offset="0" stop-opacity=".1" stop-color="#EEE"/>
+        <stop offset="1" stop-opacity=".1"/>
+    </linearGradient>
+    <mask id="m"><rect width="100%" height="100%" rx="3" fill="#FFF"/></mask>
+    <g mask="url(#m)">
+        <rect x="0" y="0" width="43" height="20" fill="#444"/>
+        <svg x="43" y="0" width="${style.width - 43}" height="20">
+            <rect width="100%" height="100%" fill="${style.barColor}"/>
+            <rect width="100%" height="100%" fill="${style.barBackground}">
+                <!-- fill is backwards. fill from 100% to 100 - points-percent -->
+                <animate attributeName="width" begin="0.5s" dur="600ms" from="100%" to="${100 - percentage}%" repeatCount="1" fill="freeze" calcMode="spline" keyTimes="0; 1" keySplines="0.3, 0.61, 0.355, 1"/>
+            </rect>
+        </svg>
+        <rect width="${style.width}" height="20" fill="url(#a)"/>
+    </g>
+    <g aria-hidden="true" fill="${style.fontColor}" font-family="${style.fontFamily}" font-size="11">
+        <text x="6" y="15" textLength="33" fill="#000" opacity="0.25">Points</text>
+        <text x="5" y="14" textLength="33">Points</text>
+        <text x="${style.width - 5}" y="15" textLength="33" fill="#000" opacity="0.25" text-anchor="end">${points}</text>
+        <text x="${style.width - 6}" y="14" textLength="33" text-anchor="end">${points}</text>
+    </g>
+</svg>`
+            break;
+
+        case 'bar':
+        default:
+            style = {
+                fontFamily: '-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
+                fontColor: '#868E96',
+                barBackground: '#EEEEEE',
+                barColor: '#0170F0',
+                width: 120,
+                ...styleOptions
+            };
+            svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${style.width}px" height="36px" role="img" aria-label="Points: ${points}">
     <title>Points: ${points}</title>
     <svg y="6px" height="16px" font-size="16px" font-family="${style.fontFamily}" fill="${style.fontColor}">
-      <text x="0" y="12">Points</text>
-      <text x="${style.width}" y="12" text-anchor="end">${points}</text>
+        <text x="0" y="12">Points</text>
+        <text x="${style.width}" y="12" text-anchor="end">${points}</text>
     </svg>
     <svg y="24" width="${style.width}px" height="6px">
-      <rect rx="3" width="100%" height="100%" fill="${style.barBackground}" />
-      <rect rx="3" width="0%" height="100%" fill="${style.barColor}">
+        <rect rx="3" width="100%" height="100%" fill="${style.barBackground}" />
+        <rect rx="3" width="0%" height="100%" fill="${style.barColor}">
         <animate attributeName="width" begin="0.5s" dur="600ms" from="0" to="${percentage}%" repeatCount="1" fill="freeze" calcMode="spline" keyTimes="0; 1" keySplines="0.3, 0.61, 0.355, 1"/>
-      </rect>
+        </rect>
     </svg>
-    </svg>`;
+</svg>`;
+    }
+    return svg;
 }
 
 // write svg file

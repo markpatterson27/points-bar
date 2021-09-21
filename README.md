@@ -47,3 +47,4 @@ jobs:
 |---|---|---|---|
 | `points` | yes |  | Points string separated with a / slash. |
 | `path` | yes |  | File path to save the generated SVG to. |
+| `type` | no | 'bar' | Style of bar to generate. Can be either 'bar' or 'badge'. |

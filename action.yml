@@ -8,6 +8,10 @@ inputs:
   path:
     description: "File path to save the generated SVG to."
     required: true
+  type:
+    description: "Style of bar to generate; either bar or badge."
+    default: "bar"
+    required: false
 
 runs:
   using: "node12"
