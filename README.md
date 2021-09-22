@@ -7,7 +7,7 @@ A GitHub action that creates an SVG points bar.
 <p align="center">
     <img alt="points bar" height="36" src="../../blob/status/.github/icons/points-bar.svg" />
     <br />
-    <img alt="points badge" height="20" src="../../blob/status/.github/icons/points-badge.svg" /><img alt="points badge reversed" height="20" src="../../blob/status/.github/icons/points-badge-reversed.svg" />
+    <img alt="points badge" height="20" src="../../blob/status/.github/icons/points-badge.svg" /> <img alt="points badge reversed" height="20" src="../../blob/status/.github/icons/points-badge-reversed.svg" />
 </p>
 
 ## Usage
@@ -51,7 +51,7 @@ jobs:
 | `path` | yes |  | File path to save the generated SVG to. |
 | `type` | no | 'default' | Style of bar to generate. Can be either 'default' or 'badge'. |
 | `bar-color` | no |  | Color to use for the points bar. |
-| `background-color` | no |  | Background color for the points bar. |
+| `bar-background` | no |  | Background color for the points bar. |
 | `reverse` | no | 'false' | Reverse the progress direction of the bar. i.e. Progress bar moves from right to left. |
 
 ## Examples
