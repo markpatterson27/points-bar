@@ -10,7 +10,7 @@ inputs:
     required: true
   type:
     description: "Style of bar to generate; either bar or badge."
-    default: "bar"
+    default: "default"
     required: false
 
 runs:
