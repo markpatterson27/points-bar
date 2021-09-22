@@ -517,10 +517,20 @@ async function run() {
     try {
         const points = core.getInput("points", {required: true});
         const filepath = core.getInput("path", {required: true});
+        const barType = core.getInput("type");
+        const barColor = core.getInput("bar-color");
+        const backgroundColor = core.getInput("background-color");
+        const reverse = (core.getInput("reverse").toLowerCase() === 'true') ? true : false;
+
+        const styleOptions = {
+            ...(barColor ? { barColor } : {}),
+            ...(backgroundColor ? { backgroundColor } : {}),
+            ...(reverse ? { reverse } : {})
+        };
 
         const pointsParts = pointsbar.splitPoints(points);
 
-        const svg = pointsbar.templateSVG(pointsParts[0], pointsParts[1]);
+        const svg = pointsbar.templateSVG(pointsParts[0], pointsParts[1], barType, styleOptions);
 
         pointsbar.writeSVGFile(filepath, svg);
 
@@ -573,15 +583,8 @@ function splitPoints(points) {
 }
 
 // returns svg string
-function templateSVG(currentPoints, maxPoints, styleOptions = {}) {
-    const style = {
-        fontFamily: '-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
-        fontColor: '#868E96',
-        barBackground: '#EEEEEE',
-        barColor: '#0170F0',
-        width: 120,
-        ...styleOptions
-    };
+function templateSVG(currentPoints, maxPoints, type = 'default', styleOptions = {}) {
+    let svg = '';
 
     const points = `${currentPoints}/${maxPoints}`;
     const percentage = Math.min(Math.floor((currentPoints / maxPoints) * 100), 100);
@@ -591,19 +594,16 @@ function templateSVG(currentPoints, maxPoints, styleOptions = {}) {
         throw new TypeError("Can not calculate percentage from inputs");
     }
 
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="${style.width}px" height="36px">
-    <title>Points: ${points}</title>
-    <svg y="6px" height="16px" font-size="16px" font-family="${style.fontFamily}" fill="${style.fontColor}">
-      <text x="0" y="12">Points</text>
-      <text x="${style.width}" y="12" text-anchor="end">${points}</text>
-    </svg>
-    <svg y="24" width="${style.width}px" height="6px">
-      <rect rx="3" width="100%" height="100%" fill="${style.barBackground}" />
-      <rect rx="3" width="0%" height="100%" fill="${style.barColor}">
-        <animate attributeName="width" begin="0.5s" dur="600ms" from="0" to="${percentage}%" repeatCount="1" fill="freeze" calcMode="spline" keyTimes="0; 1" keySplines="0.3, 0.61, 0.355, 1"/>
-      </rect>
-    </svg>
-    </svg>`;
+    // load template for bar type
+    if (type == 'badge') {
+        const template = __nccwpck_require__(549);
+        svg = template(points, percentage, styleOptions);
+    }
+    else {
+        const template = __nccwpck_require__(196);
+        svg = template(points, percentage, styleOptions);
+    }
+    return svg;
 }
 
 // write svg file
@@ -652,6 +652,83 @@ function writeSVGFile(filePath, svg) {
 }
 
 module.exports = { splitPoints, templateSVG, writeSVGFile }
+
+
+/***/ }),
+
+/***/ 549:
+/***/ ((module) => {
+
+module.exports = (points, percentage, styleOptions = {}) => {
+    const style = {
+        fontFamily: 'Verdana, DejaVu Sans, sans-serif',
+        fontColor: '#FFFFFF',
+        barBackground: '#888888',
+        barColor: '#33CC11',
+        width: 140,
+        reverse: false,
+        ...styleOptions
+    };
+    const transform = (style.reverse) ? `scale(-1,1) translate(-${style.width - 43},0)` : ``;
+
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="${style.width}px" height="20px" role="img" aria-label="Points: ${points}">
+    <title>Points: ${points}</title>
+    <linearGradient id="a" x2="0" y2="100%">
+        <stop offset="0" stop-opacity=".1" stop-color="#EEE"/>
+        <stop offset="1" stop-opacity=".1"/>
+    </linearGradient>
+    <mask id="m"><rect width="100%" height="100%" rx="3" fill="#FFF"/></mask>
+    <g mask="url(#m)">
+        <rect x="0" y="0" width="43" height="20" fill="#444"/>
+        <svg x="43" y="0" width="${style.width - 43}" height="20">
+            <rect width="100%" height="100%" fill="${style.barBackground}"/>
+            <rect width="0%" height="100%" fill="${style.barColor}" transform="${transform}">
+                <animate attributeName="width" begin="0.5s" dur="600ms" from="0%" to="${percentage}%" repeatCount="1" fill="freeze" calcMode="spline" keyTimes="0; 1" keySplines="0.3, 0.61, 0.355, 1"/>
+            </rect>
+        </svg>
+        <rect width="${style.width}" height="20" fill="url(#a)"/>
+    </g>
+    <g aria-hidden="true" fill="${style.fontColor}" font-family="${style.fontFamily}" font-size="11">
+        <text x="6" y="15" fill="#000" opacity="0.25">Points</text>
+        <text x="5" y="14">Points</text>
+        <text x="${style.width - 5}" y="15" fill="#000" opacity="0.25" text-anchor="end">${points}</text>
+        <text x="${style.width - 6}" y="14" text-anchor="end">${points}</text>
+    </g>
+</svg>`
+}
+
+
+/***/ }),
+
+/***/ 196:
+/***/ ((module) => {
+
+module.exports = (points, percentage, styleOptions = {}) => {
+    const style = {
+        fontFamily: '-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
+        fontColor: '#868E96',
+        barBackground: '#EEEEEE',
+        barColor: '#0170F0',
+        width: 120,
+        reverse: false,
+        ...styleOptions
+    };
+    const transform = (style.reverse) ? `scale(-1,1) translate(-${style.width},0)` : ``;
+
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="${style.width}px" height="36px" role="img" aria-label="Points: ${points}">
+    <title>Points: ${points}</title>
+    <svg y="6px" height="16px" font-size="16px" font-family="${style.fontFamily}" fill="${style.fontColor}">
+        <text x="0" y="12">Points</text>
+        <text x="${style.width}" y="12" text-anchor="end">${points}</text>
+    </svg>
+    <svg y="24" width="${style.width}px" height="6px">
+        <rect rx="3" width="100%" height="100%" fill="${style.barBackground}" />
+        <rect rx="3" width="0%" height="100%" fill="${style.barColor}" transform="${transform}">
+            <animate attributeName="width" begin="0.5s" dur="600ms" from="0%" to="${percentage}%" repeatCount="1" fill="freeze" calcMode="spline" keyTimes="0; 1" keySplines="0.3, 0.61, 0.355, 1"/>
+        </rect>
+    </svg>
+</svg>`;
+}
 
 
 /***/ }),
