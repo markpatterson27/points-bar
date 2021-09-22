@@ -29,11 +29,30 @@ jobs:
           points: ${{ steps.random-points.outputs.points }}
           path: '.github/icons/points-bar.svg'
 
+      # create points badge
+      - name: points badge
+        uses: markpatterson27/points-bar@v1
+        with:
+          points: ${{ steps.random-points.outputs.points }}
+          path: '.github/icons/points-badge.svg'
+          type: 'badge'
+
+      # create points badge reversed
+      - name: points badge reversed
+        uses: markpatterson27/points-bar@v1
+        with:
+          points: ${{ steps.random-points.outputs.points }}
+          path: '.github/icons/points-badge-reversed.svg'
+          type: 'badge'
+          bar-color: '#11BBCC'
+          background-color: '#88BBCC'
+          reverse: true
+
       # commit and push activity icons if statuses have changed
       - name: Commit changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add '.github/icons/points-bar.svg'
+          git add '.github/icons/points-*.svg'
           git commit -m "Add/Update points bar" || exit 0
           git push origin status
