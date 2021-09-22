@@ -15,7 +15,7 @@ inputs:
   bar-color:
     description: "Color to use for the points bar."
     required: false
-  background-color:
+  bar-background:
     description: "Background color for the points bar."
     required: false
   reverse:
