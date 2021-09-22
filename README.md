@@ -51,7 +51,7 @@ jobs:
 | `path` | yes |  | File path to save the generated SVG to. |
 | `type` | no | 'default' | Style of bar to generate. Can be either 'default' or 'badge'. |
 | `bar-color` | no |  | Color to use for the points bar. |
-| `background-color` | no |  | Background color for the points bar. |
+| `bar-background` | no |  | Background color for the points bar. |
 | `reverse` | no | 'false' | Reverse the progress direction of the bar. i.e. Progress bar moves from right to left. |
 
 ## Examples
@@ -93,6 +93,6 @@ jobs:
     path: '.github/icons/points-badge-reversed.svg'
     type: 'badge'
     bar-color: '#11BBCC'
-    background-color: '#88BBCC'
+    bar-background: '#88BBCC'
     reverse: true
 ```

@@ -45,7 +45,7 @@ jobs:
           path: '.github/icons/points-badge-reversed.svg'
           type: 'badge'
           bar-color: '#11BBCC'
-          background-color: '#88BBCC'
+          bar-background: '#88BBCC'
           reverse: true
 
       # commit and push activity icons if statuses have changed
