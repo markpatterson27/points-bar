@@ -48,3 +48,6 @@ jobs:
 | `points` | yes |  | Points string separated with a / slash. |
 | `path` | yes |  | File path to save the generated SVG to. |
 | `type` | no | 'default' | Style of bar to generate. Can be either 'default' or 'badge'. |
+| `bar-color` | no |  | Color to use for the points bar. |
+| `background-color` | no |  | Background color for the points bar. |
+| `reverse` | no | 'false' | Reverse the progress direction of the bar. i.e. Progress bar moves from right to left. |
