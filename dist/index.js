@@ -519,12 +519,12 @@ async function run() {
         const filepath = core.getInput("path", {required: true});
         const barType = core.getInput("type");
         const barColor = core.getInput("bar-color");
-        const backgroundColor = core.getInput("background-color");
+        const barBackground = core.getInput("bar-background");
         const reverse = (core.getInput("reverse").toLowerCase() === 'true') ? true : false;
 
         const styleOptions = {
             ...(barColor ? { barColor } : {}),
-            ...(backgroundColor ? { backgroundColor } : {}),
+            ...(barBackground ? { barBackground } : {}),
             ...(reverse ? { reverse } : {})
         };
 
