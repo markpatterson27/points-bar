@@ -76,10 +76,23 @@ describe("action interaction", () => {
         expect(core.setFailed).toBeCalledWith(expect.stringMatching(expectedRE));
     });
 
-    // test valid inputs creates file
-    test('valid inputs creates file', () => {
+    // test valid required inputs create file
+    test('valid required inputs create file', () => {
         process.env['INPUT_POINTS'] = '12/34';
         process.env['INPUT_PATH'] = 'dummy-path/pointsbar.svg';
+        action.run();
+        expect(core.setFailed).not.toHaveBeenCalled();
+        expect(fs.writeFileSync).toHaveBeenCalled();
+    });
+
+    // test valid inputs create file
+    test('valid inputs create file', () => {
+        process.env['INPUT_POINTS'] = '12/34';
+        process.env['INPUT_PATH'] = 'dummy-path/pointsbar.svg';
+        process.env['INPUT_TYPE'] = 'badge';
+        process.env['INPUT_BAR-COLOR'] = '#123456';
+        process.env['INPUT_BACKGROUND-COLOR'] = '#123456';
+        process.env['INPUT_REVERSE'] = 'true';
         action.run();
         expect(core.setFailed).not.toHaveBeenCalled();
         expect(fs.writeFileSync).toHaveBeenCalled();

@@ -92,6 +92,48 @@ describe("templateSVG function", () => {
         }
     });
 
+    // test type returns non default template
+    test("type returns correct template", () => {
+        const currentPoints = "10";
+        const maxPoints = "100";
+        const type = "badge";
+
+        const typeSVG = templateSVG(currentPoints, maxPoints, type);
+        const defaultSVG = templateSVG(currentPoints, maxPoints);
+
+        expect(typeSVG).toContain(`<svg`);
+        expect(typeSVG).toContain(`</svg>`);
+        expect(typeSVG).toEqual(expect.not.stringMatching(defaultSVG));
+    });
+
+    // test style options used in SVG
+    const testTypes = [
+        ['default'],
+        ['badge']
+    ];
+    test.each(testTypes)("style options used in SVG", (type) => {
+        const currentPoints = "10";
+        const maxPoints = "100";
+        const style = {
+            fontFamily: 'Times New Roman',
+            fontColor: '#ABCDEF',
+            barBackground: '#123456',
+            barColor: '#987654',
+            width: 100,
+            reverse: true,
+        };
+
+        const svg = templateSVG(currentPoints, maxPoints, type, style);
+
+        expect(svg).toContain(`<svg`);
+        expect(svg).toContain(`</svg>`);
+        expect(svg).toContain(`font-family="${style.fontFamily}"`);
+        expect(svg).toContain(`fill="${style.fontColor}"`);
+        expect(svg).toContain(`fill="${style.barBackground}"`);
+        expect(svg).toContain(`fill="${style.barColor}"`);
+        expect(svg).toContain(`width="${style.width}px"`);
+        expect(svg).not.toContain(`transform=""`);
+    });
 });
 
 // test writeSVGFile

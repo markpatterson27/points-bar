@@ -8,6 +8,20 @@ inputs:
   path:
     description: "File path to save the generated SVG to."
     required: true
+  type:
+    description: "Style of bar to generate; either bar or badge."
+    default: "default"
+    required: false
+  bar-color:
+    description: "Color to use for the points bar."
+    required: false
+  background-color:
+    description: "Background color for the points bar."
+    required: false
+  reverse:
+    description: "Reverse the progress direction of the bar. i.e. Progress bar moves from right to left."
+    default: false
+    required: false
 
 runs:
   using: "node12"

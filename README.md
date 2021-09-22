@@ -6,6 +6,8 @@ A GitHub action that creates an SVG points bar.
 
 <p align="center">
     <img alt="points bar" height="36" src="../../blob/status/.github/icons/points-bar.svg" />
+    <br />
+    <img alt="points badge" height="20" src="../../blob/status/.github/icons/points-badge.svg" /><img alt="points badge reversed" height="20" src="../../blob/status/.github/icons/points-badge-reversed.svg" />
 </p>
 
 ## Usage
@@ -47,3 +49,50 @@ jobs:
 |---|---|---|---|
 | `points` | yes |  | Points string separated with a / slash. |
 | `path` | yes |  | File path to save the generated SVG to. |
+| `type` | no | 'default' | Style of bar to generate. Can be either 'default' or 'badge'. |
+| `bar-color` | no |  | Color to use for the points bar. |
+| `background-color` | no |  | Background color for the points bar. |
+| `reverse` | no | 'false' | Reverse the progress direction of the bar. i.e. Progress bar moves from right to left. |
+
+## Examples
+
+### Default
+
+<img alt="points bar" height="36" src="../../blob/status/.github/icons/points-bar.svg" />
+
+```yaml
+- name: points bar
+  uses: markpatterson27/points-bar@v1
+  with:
+    points: '25/50'
+    path: '.github/icons/points-bar.svg'
+```
+
+### Badge
+
+<img alt="points badge" height="20" src="../../blob/status/.github/icons/points-badge.svg" />
+
+```yaml
+- name: points badge
+  uses: markpatterson27/points-bar@v1
+  with:
+    points: '25/50'
+    path: '.github/icons/points-badge.svg'
+    type: 'badge'
+```
+
+### Reversed
+
+<img alt="points badge reversed" height="20" src="../../blob/status/.github/icons/points-badge-reversed.svg" />
+
+```yaml
+- name: points badge reversed
+  uses: markpatterson27/points-bar@v1
+  with:
+    points: '25/50'
+    path: '.github/icons/points-badge-reversed.svg'
+    type: 'badge'
+    bar-color: '#11BBCC'
+    background-color: '#88BBCC'
+    reverse: true
+```
