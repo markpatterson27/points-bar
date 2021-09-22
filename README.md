@@ -7,7 +7,7 @@ A GitHub action that creates an SVG points bar.
 <p align="center">
     <img alt="points bar" height="36" src="../../blob/status/.github/icons/points-bar.svg" />
     <br />
-    <img alt="points badge" height="20" src="../../blob/status/.github/icons/points-badge.svg" /><img alt="points badge reversed" height="20" src="../../blob/status/.github/icons/points-badge-reversed.svg" />
+    <img alt="points badge" height="20" src="../../blob/status/.github/icons/points-badge.svg" /> <img alt="points badge reversed" height="20" src="../../blob/status/.github/icons/points-badge-reversed.svg" />
 </p>
 
 ## Usage
