@@ -96,3 +96,7 @@ jobs:
     bar-background: '#88BBCC'
     reverse: true
 ```
+
+## Alternatives
+
+[Badge Action](https://github.com/emibcn/badge-action) creates a customizable badge with many styling options. Useful if you want a customizable badge and don't need a progress style points bar.
