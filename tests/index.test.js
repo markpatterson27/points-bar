@@ -77,17 +77,28 @@ describe("action interaction", () => {
 
     // test valid required inputs create file
     test('valid required inputs create file', () => {
-        process.env['INPUT_POINTS'] = '12/34';
-        process.env['INPUT_PATH'] = 'dummy-path/pointsbar.svg';
+        const points = '12/34';
+        const svgPath = 'dummy-path/pointsbar.svg'
+        process.env['INPUT_POINTS'] = points;
+        process.env['INPUT_PATH'] = svgPath;
         action.run();
         expect(core.setFailed).not.toHaveBeenCalled();
         expect(fs.writeFileSync).toHaveBeenCalled();
+        expect(fs.existsSync(svgPath)).toBe(true);
+
+        const svgFileContents = fs.readFileSync(svgPath, 'utf-8');
+        expect(svgFileContents).toContain(`<svg`);      // file start
+        expect(svgFileContents).toContain(`</svg>`);    // file end
+        expect(svgFileContents).toContain(`<title>Points: ${points}</title>`);
+        expect(svgFileContents).toContain(`<text x="0" y="12">Points</text>`);
     });
 
     // test valid inputs create file
     test('valid inputs create file', () => {
-        process.env['INPUT_POINTS'] = '12/34';
-        process.env['INPUT_PATH'] = 'dummy-path/pointsbar.svg';
+        const points = '12/34';
+        const svgPath = 'dummy-path/pointsbar.svg'
+        process.env['INPUT_POINTS'] = points;
+        process.env['INPUT_PATH'] = svgPath;
         process.env['INPUT_TYPE'] = 'badge';
         process.env['INPUT_BAR-COLOR'] = '#123456';
         process.env['INPUT_BACKGROUND-COLOR'] = '#123456';
@@ -95,6 +106,7 @@ describe("action interaction", () => {
         action.run();
         expect(core.setFailed).not.toHaveBeenCalled();
         expect(fs.writeFileSync).toHaveBeenCalled();
+        expect(fs.existsSync(svgPath)).toBe(true);
     });
 });
 
