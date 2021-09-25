@@ -1,22 +1,24 @@
 const process = require('process');
 const cp = require('child_process');
 // const path = require('path');
-const fs = require('fs');
+const { fs, vol } = require('memfs');
 const core = require('@actions/core');
 const action = require('../src/index');
+
+jest.mock('fs');
 
 // action tests
 // test outputs triggered
 describe("action interaction", () => {
     beforeEach(() => {
-        jest.spyOn(core, "setOutput").mockImplementation();
+        // jest.spyOn(core, "setOutput").mockImplementation();
         jest.spyOn(core, "setFailed").mockImplementation();
         jest.spyOn(console, 'warn').mockImplementation(() => {});
         jest.spyOn(console, 'error').mockImplementation(() => {});
-        const mockfsmkdirSync = jest.spyOn(fs, 'mkdirSync');
-        mockfsmkdirSync.mockImplementation(() => {});
 
-        jest.spyOn(fs, 'writeFileSync').mockImplementation(() => {});
+        jest.spyOn(fs, 'mkdirSync');
+        jest.spyOn(fs, 'writeFileSync');
+        vol.reset();
     });
     afterEach(() => {
         jest.clearAllMocks();
@@ -65,9 +67,6 @@ describe("action interaction", () => {
         ['!pointsbar[a-z]*\0.svg', 'Error writing SVG file'],
     ];
     test.each(testPaths)('invalid path throws error', (inputPath, expected) => {
-        // un-mock fs: need real write attempt to throw error
-        jest.spyOn(fs, 'mkdirSync').mockRestore();
-        jest.spyOn(fs, 'writeFileSync').mockRestore();
         process.env['INPUT_POINTS'] = '12/34';
         process.env['INPUT_PATH'] = inputPath;
         const expectedRE = new RegExp(expected, 'gi');
