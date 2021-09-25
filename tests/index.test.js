@@ -64,12 +64,12 @@ describe("action interaction", () => {
         ['dummy-path?*\0/pointsbar.svg', 'Error creating directory'],
         ['!pointsbar[a-z]*\0.svg', 'Error writing SVG file'],
     ];
-    test.each(testPaths)('invalid path throws error', (path, expected) => {
+    test.each(testPaths)('invalid path throws error', (inputPath, expected) => {
         // un-mock fs: need real write attempt to throw error
         jest.spyOn(fs, 'mkdirSync').mockRestore();
         jest.spyOn(fs, 'writeFileSync').mockRestore();
         process.env['INPUT_POINTS'] = '12/34';
-        process.env['INPUT_PATH'] = path;
+        process.env['INPUT_PATH'] = inputPath;
         const expectedRE = new RegExp(expected, 'gi');
         action.run();
         expect(core.setFailed).toHaveBeenCalled();
