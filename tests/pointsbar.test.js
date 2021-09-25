@@ -96,9 +96,9 @@ describe("templateSVG function", () => {
     test("type returns correct template", () => {
         const currentPoints = "10";
         const maxPoints = "100";
-        const type = "badge";
+        const options = {type:"badge"};
 
-        const typeSVG = templateSVG(currentPoints, maxPoints, type);
+        const typeSVG = templateSVG(currentPoints, maxPoints, options);
         const defaultSVG = templateSVG(currentPoints, maxPoints);
 
         expect(typeSVG).toContain(`<svg`);
@@ -122,8 +122,12 @@ describe("templateSVG function", () => {
             width: 100,
             reverse: true,
         };
+        const options = {
+            type: type,
+            style: style
+        };
 
-        const svg = templateSVG(currentPoints, maxPoints, type, style);
+        const svg = templateSVG(currentPoints, maxPoints, options);
 
         expect(svg).toContain(`<svg`);
         expect(svg).toContain(`</svg>`);

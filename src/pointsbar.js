@@ -30,7 +30,9 @@ function splitPoints(points) {
 }
 
 // returns svg string
-function templateSVG(currentPoints, maxPoints, type = 'default', styleOptions = {}) {
+function templateSVG(currentPoints, maxPoints, options = {}) {
+    const type = options.type || 'default';
+    const styleOptions = options.style || {};
     let svg = '';
 
     const points = `${currentPoints}/${maxPoints}`;

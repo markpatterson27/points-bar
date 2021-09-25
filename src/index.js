@@ -15,10 +15,14 @@ async function run() {
             ...(barBackground ? { barBackground } : {}),
             ...(reverse ? { reverse } : {})
         };
+        const options = {
+            type: barType ? barType : 'default',
+            style: styleOptions,
+        }
 
         const pointsParts = pointsbar.splitPoints(points);
 
-        const svg = pointsbar.templateSVG(pointsParts[0], pointsParts[1], barType, styleOptions);
+        const svg = pointsbar.templateSVG(pointsParts[0], pointsParts[1], options);
 
         pointsbar.writeSVGFile(filepath, svg);
 
