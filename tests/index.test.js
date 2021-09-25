@@ -97,16 +97,26 @@ describe("action interaction", () => {
     test('valid inputs create file', () => {
         const points = '12/34';
         const svgPath = 'dummy-path/pointsbar.svg'
+        const barColor = '#123456';
+        const barBackground = '#abcdef'
         process.env['INPUT_POINTS'] = points;
         process.env['INPUT_PATH'] = svgPath;
         process.env['INPUT_TYPE'] = 'badge';
-        process.env['INPUT_BAR-COLOR'] = '#123456';
-        process.env['INPUT_BACKGROUND-COLOR'] = '#123456';
+        process.env['INPUT_BAR-COLOR'] = barColor;
+        process.env['INPUT_BAR-BACKGROUND'] = barBackground;
         process.env['INPUT_REVERSE'] = 'true';
         action.run();
         expect(core.setFailed).not.toHaveBeenCalled();
         expect(fs.writeFileSync).toHaveBeenCalled();
         expect(fs.existsSync(svgPath)).toBe(true);
+
+        const svgFileContents = fs.readFileSync(svgPath, 'utf-8');
+        expect(svgFileContents).toContain(`<svg`);      // file start (and width)
+        expect(svgFileContents).toContain(`</svg>`);    // file end
+        expect(svgFileContents).toContain(`<title>Points: ${points}</title>`);  // points
+        expect(svgFileContents).toContain(`<text x="5" y="14">Points</text>`);  // type (and label)
+        expect(svgFileContents).toContain(`<rect width="100%" height="100%" fill="${barBackground}"/>`);    // bar background
+        expect(svgFileContents).toContain(`<rect width="0%" height="100%" fill="${barColor}" transform="scale(-1,1) translate(-`);  // bar-color and reverse
     });
 });
 
