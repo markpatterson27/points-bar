@@ -37,6 +37,16 @@ jobs:
           path: '.github/icons/points-badge.svg'
           type: 'badge'
 
+      # create points bar with custom colors
+      - name: points bar color
+        uses: markpatterson27/points-bar@v1
+        with:
+          points: ${{ steps.random-points.outputs.points }}
+          path: '.github/icons/points-bar-color.svg'
+          bar-color: 'gold'
+          bar-background: '#115544'
+          font-color: '#BF5700'
+
       # create points badge reversed
       - name: points badge reversed
         uses: markpatterson27/points-bar@v1

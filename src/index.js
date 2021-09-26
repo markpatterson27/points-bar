@@ -8,11 +8,13 @@ async function run() {
         const barType = core.getInput("type");
         const barColor = core.getInput("bar-color");
         const barBackground = core.getInput("bar-background");
+        const fontColor = core.getInput("font-color");
         const reverse = (core.getInput("reverse").toLowerCase() === 'true') ? true : false;
 
         const styleOptions = {
             ...(barColor ? { barColor } : {}),
             ...(barBackground ? { barBackground } : {}),
+            ...(fontColor ? { fontColor } : {}),
             ...(reverse ? { reverse } : {})
         };
         const options = {
