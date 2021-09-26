@@ -37,6 +37,41 @@ jobs:
           path: '.github/icons/points-badge.svg'
           type: 'badge'
 
+      # create points bar with custom colors
+      - name: points bar color
+        uses: markpatterson27/points-bar@v1
+        with:
+          points: ${{ steps.random-points.outputs.points }}
+          path: '.github/icons/points-bar-color.svg'
+          bar-color: 'gold'
+          bar-background: '#115544'
+          font-color: '#BF5700'
+
+      # create points bar with custom label
+      - name: score bar
+        uses: markpatterson27/points-bar@v1
+        with:
+          points: ${{ steps.random-points.outputs.points }}
+          path: '.github/icons/points-bar-custom-label.svg'
+          label: 'Score'
+
+      # create points badge with custom label
+      - name: autograde badge
+        uses: markpatterson27/points-bar@v1
+        with:
+          points: ${{ steps.random-points.outputs.points }}
+          path: '.github/icons/points-badge-custom-label.svg'
+          type: 'badge'
+          label: 'Autograde'
+
+      # create wide points bar
+      - name: wide points bar
+        uses: markpatterson27/points-bar@v1
+        with:
+          points: ${{ steps.random-points.outputs.points }}
+          path: '.github/icons/points-bar-wide.svg'
+          width: 220
+
       # create points badge reversed
       - name: points badge reversed
         uses: markpatterson27/points-bar@v1
@@ -45,7 +80,7 @@ jobs:
           path: '.github/icons/points-badge-reversed.svg'
           type: 'badge'
           bar-color: '#11BBCC'
-          background-color: '#88BBCC'
+          bar-background: '#88BBCC'
           reverse: true
 
       # commit and push activity icons if statuses have changed

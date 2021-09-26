@@ -30,7 +30,10 @@ function splitPoints(points) {
 }
 
 // returns svg string
-function templateSVG(currentPoints, maxPoints, type = 'default', styleOptions = {}) {
+function templateSVG(currentPoints, maxPoints, options = {}) {
+    const type = options.type || 'default';
+    const label = options.label || 'Points';
+    const styleOptions = options.style || {};
     let svg = '';
 
     const points = `${currentPoints}/${maxPoints}`;
@@ -44,11 +47,11 @@ function templateSVG(currentPoints, maxPoints, type = 'default', styleOptions = 
     // load template for bar type
     if (type == 'badge') {
         const template = require('./template-badge');
-        svg = template(points, percentage, styleOptions);
+        svg = template(points, percentage, label, styleOptions);
     }
     else {
         const template = require('./template-default');
-        svg = template(points, percentage, styleOptions);
+        svg = template(points, percentage, label, styleOptions);
     }
     return svg;
 }
