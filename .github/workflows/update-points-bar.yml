@@ -12,8 +12,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      # switch to status branch
-      - run: git checkout status || git checkout -b status
+      # switch to svg-build branch
+      - run: git checkout svg-build || git checkout -b svg-build
 
       # generate random points
       - name: random points
@@ -83,11 +83,11 @@ jobs:
           bar-background: '#88BBCC'
           reverse: true
 
-      # commit and push activity icons if statuses have changed
+      # commit and push activity icons if svg-builds have changed
       - name: Commit changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add '.github/icons/points-*.svg'
           git commit -m "Add/Update points bar" || exit 0
-          git push origin status
+          git push origin svg-build

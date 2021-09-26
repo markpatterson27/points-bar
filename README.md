@@ -5,9 +5,9 @@
 A GitHub action that creates an SVG points bar.
 
 <p align="center">
-    <img alt="points bar" height="36" src="../../blob/status/.github/icons/points-bar.svg" />
+    <img alt="points bar" height="36" src="../../blob/svg-build/.github/icons/points-bar.svg" />
     <br />
-    <img alt="points badge" height="20" src="../../blob/status/.github/icons/points-badge.svg" /> <img alt="points badge reversed" height="20" src="../../blob/status/.github/icons/points-badge-reversed.svg" />
+    <img alt="points badge" height="20" src="../../blob/svg-build/.github/icons/points-badge.svg" /> <img alt="points badge reversed" height="20" src="../../blob/svg-build/.github/icons/points-badge-reversed.svg" />
 </p>
 
 ## Usage
@@ -61,7 +61,7 @@ jobs:
 
 ### Default
 
-<img alt="points bar" height="36" src="../../blob/status/.github/icons/points-bar.svg" />
+<img alt="points bar" height="36" src="../../blob/svg-build/.github/icons/points-bar.svg" />
 
 ```yaml
 - name: points bar
@@ -73,7 +73,7 @@ jobs:
 
 ### Badge
 
-<img alt="points badge" height="20" src="../../blob/status/.github/icons/points-badge.svg" />
+<img alt="points badge" height="20" src="../../blob/svg-build/.github/icons/points-badge.svg" />
 
 ```yaml
 - name: points badge
@@ -86,7 +86,7 @@ jobs:
 
 ### Text and Bar Color
 
-<img alt="points bar color" height="36" src="../../blob/status/.github/icons/points-bar-color.svg" />
+<img alt="points bar color" height="36" src="../../blob/svg-build/.github/icons/points-bar-color.svg" />
 
 ```yaml
 - name: points bar color
@@ -101,7 +101,7 @@ jobs:
 
 ### Label
 
-<img alt="points bar custom label" height="36" src="../../blob/status/.github/icons/points-bar-custom-label.svg" />
+<img alt="points bar custom label" height="36" src="../../blob/svg-build/.github/icons/points-bar-custom-label.svg" />
 
 ```yaml
 - name: points bar
@@ -112,7 +112,7 @@ jobs:
     label: 'Score'
 ```
 
-<img alt="points badge custom label" height="20" src="../../blob/status/.github/icons/points-badge-custom-label.svg" />
+<img alt="points badge custom label" height="20" src="../../blob/svg-build/.github/icons/points-badge-custom-label.svg" />
 
 ```yaml
 - name: autograde badge
@@ -126,7 +126,7 @@ jobs:
 
 ### Width
 
-<img alt="points bar wide" height="36" src="../../blob/status/.github/icons/points-bar-wide.svg" />
+<img alt="points bar wide" height="36" src="../../blob/svg-build/.github/icons/points-bar-wide.svg" />
 
 ```yaml
 - name: points bar
@@ -139,7 +139,7 @@ jobs:
 
 ### Reversed
 
-<img alt="points badge reversed" height="20" src="../../blob/status/.github/icons/points-badge-reversed.svg" />
+<img alt="points badge reversed" height="20" src="../../blob/svg-build/.github/icons/points-badge-reversed.svg" />
 
 ```yaml
 - name: points badge reversed
