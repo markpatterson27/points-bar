@@ -21,6 +21,10 @@ inputs:
   font-color:
     description: "Color to use for text."
     required: false
+  label:
+    description: "Text to use for label part of points bar."
+    default: "Points"
+    required: false
   reverse:
     description: "Reverse the progress direction of the bar. i.e. Progress bar moves from right to left."
     default: false

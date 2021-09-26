@@ -9,6 +9,7 @@ async function run() {
         const barColor = core.getInput("bar-color");
         const barBackground = core.getInput("bar-background");
         const fontColor = core.getInput("font-color");
+        const label = core.getInput("label");
         const reverse = (core.getInput("reverse").toLowerCase() === 'true') ? true : false;
 
         const styleOptions = {
@@ -19,6 +20,7 @@ async function run() {
         };
         const options = {
             type: barType ? barType : 'default',
+            label: label ? label : 'Points',
             style: styleOptions,
         }
 

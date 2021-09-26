@@ -53,6 +53,7 @@ jobs:
 | `bar-color` | no |  | Color to use for the points bar. |
 | `bar-background` | no |  | Background color for the points bar. |
 | `font-color` | no |  | Color to use for text. |
+| `label` | no | 'Points' | Text to use for label part of points bar. |
 | `reverse` | no | 'false' | Reverse the progress direction of the bar. i.e. Progress bar moves from right to left. |
 
 ## Examples
@@ -95,6 +96,31 @@ jobs:
     bar-color: 'gold'
     bar-background: '#115544'
     font-color: '#BF5700'
+```
+
+### Label
+
+<img alt="points bar custom label" height="36" src="../../blob/status/.github/icons/points-bar-custom-label.svg" />
+
+```yaml
+- name: points bar
+  uses: markpatterson27/points-bar@v1
+  with:
+    points: '25/50'
+    path: '.github/icons/points-bar-custom-label.svg'
+    label: 'Score'
+```
+
+<img alt="points badge custom label" height="20" src="../../blob/status/.github/icons/points-badge-custom-label.svg" />
+
+```yaml
+- name: autograde badge
+  uses: markpatterson27/points-bar@v1
+  with:
+    points: '25/50'
+    path: '.github/icons/points-badge-custom-label.svg'
+    type: 'badge'
+    label: 'Autograde'
 ```
 
 ### Reversed

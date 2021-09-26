@@ -47,6 +47,23 @@ jobs:
           bar-background: '#115544'
           font-color: '#BF5700'
 
+      # create points bar with custom label
+      - name: score bar
+        uses: markpatterson27/points-bar@v1
+        with:
+          points: ${{ steps.random-points.outputs.points }}
+          path: '.github/icons/points-bar-custom-label.svg'
+          label: 'Score'
+
+      # create points badge with custom label
+      - name: autograde badge
+        uses: markpatterson27/points-bar@v1
+        with:
+          points: ${{ steps.random-points.outputs.points }}
+          path: '.github/icons/points-badge-custom-label.svg'
+          type: 'badge'
+          label: 'Autograde'
+
       # create points badge reversed
       - name: points badge reversed
         uses: markpatterson27/points-bar@v1
