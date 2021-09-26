@@ -17,7 +17,7 @@ module.exports = (points, percentage, styleOptions = {}) => {
         <text x="${style.width}" y="12" text-anchor="end">${points}</text>
     </svg>
     <svg y="24" width="${style.width}px" height="6px">
-        <rect rx="3" width="100%" height="100%" fill="${style.barBackground}" />
+        <rect rx="3" width="100%" height="100%" fill="${style.barBackground}"/>
         <rect rx="3" width="0%" height="100%" fill="${style.barColor}" transform="${transform}">
             <animate attributeName="width" begin="0.5s" dur="600ms" from="0%" to="${percentage}%" repeatCount="1" fill="freeze" calcMode="spline" keyTimes="0; 1" keySplines="0.3, 0.61, 0.355, 1"/>
         </rect>
