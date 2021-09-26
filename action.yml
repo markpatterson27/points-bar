@@ -25,6 +25,9 @@ inputs:
     description: "Text to use for label part of points bar."
     default: "Points"
     required: false
+  width:
+    description: "Bar/badge width."
+    required: false
   reverse:
     description: "Reverse the progress direction of the bar. i.e. Progress bar moves from right to left."
     default: false

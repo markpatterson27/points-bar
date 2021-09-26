@@ -64,6 +64,14 @@ jobs:
           type: 'badge'
           label: 'Autograde'
 
+      # create wide points bar
+      - name: wide points bar
+        uses: markpatterson27/points-bar@v1
+        with:
+          points: ${{ steps.random-points.outputs.points }}
+          path: '.github/icons/points-bar-wide.svg'
+          width: 220
+
       # create points badge reversed
       - name: points badge reversed
         uses: markpatterson27/points-bar@v1

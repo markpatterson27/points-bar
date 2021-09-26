@@ -10,12 +10,14 @@ async function run() {
         const barBackground = core.getInput("bar-background");
         const fontColor = core.getInput("font-color");
         const label = core.getInput("label");
+        const width = core.getInput("width");
         const reverse = (core.getInput("reverse").toLowerCase() === 'true') ? true : false;
 
         const styleOptions = {
             ...(barColor ? { barColor } : {}),
             ...(barBackground ? { barBackground } : {}),
             ...(fontColor ? { fontColor } : {}),
+            ...(width ? { width } : {}),
             ...(reverse ? { reverse } : {})
         };
         const options = {

@@ -54,6 +54,7 @@ jobs:
 | `bar-background` | no |  | Background color for the points bar. |
 | `font-color` | no |  | Color to use for text. |
 | `label` | no | 'Points' | Text to use for label part of points bar. |
+| `width` | no |  | Bar/badge width. |
 | `reverse` | no | 'false' | Reverse the progress direction of the bar. i.e. Progress bar moves from right to left. |
 
 ## Examples
@@ -121,6 +122,19 @@ jobs:
     path: '.github/icons/points-badge-custom-label.svg'
     type: 'badge'
     label: 'Autograde'
+```
+
+### Width
+
+<img alt="points bar wide" height="36" src="../../blob/status/.github/icons/points-bar-wide.svg" />
+
+```yaml
+- name: points bar
+  uses: markpatterson27/points-bar@v1
+  with:
+    points: '25/50'
+    path: '.github/icons/points-bar-wide.svg'
+    width: 220
 ```
 
 ### Reversed
