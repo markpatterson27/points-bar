@@ -1,4 +1,4 @@
-module.exports = (points, percentage, styleOptions = {}) => {
+module.exports = (points, percentage, label = 'Points', styleOptions = {}) => {
     const style = {
         fontFamily: '-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
         fontColor: '#868E96',
@@ -10,10 +10,10 @@ module.exports = (points, percentage, styleOptions = {}) => {
     };
     const transform = (style.reverse) ? `scale(-1,1) translate(-${style.width},0)` : ``;
 
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="${style.width}px" height="36px" role="img" aria-label="Points: ${points}">
-    <title>Points: ${points}</title>
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="${style.width}px" height="36px" role="img" aria-label="${label}: ${points}">
+    <title>${label}: ${points}</title>
     <svg y="6px" height="16px" font-size="16px" font-family="${style.fontFamily}" fill="${style.fontColor}">
-        <text x="0" y="12">Points</text>
+        <text x="0" y="12">${label}</text>
         <text x="${style.width}" y="12" text-anchor="end">${points}</text>
     </svg>
     <svg y="24" width="${style.width}px" height="6px">
