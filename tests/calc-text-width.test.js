@@ -15,6 +15,6 @@ test.each(testWidths)("text '%s' returns width '%d'", (text, expectedWidth) => {
 
     console.log(`For '${text}' returned: ${width}`)
 
-    const between = (expectedWidth-2 < textWidth(text) && textWidth(text) < expectedWidth+2);
+    const between = (expectedWidth-2 < width && width < expectedWidth+2);
     expect(between).toBe(true);
 });
