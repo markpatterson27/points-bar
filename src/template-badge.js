@@ -27,7 +27,7 @@ module.exports = (points, percentage, styleOptions = {}) => {
         </svg>
         <rect width="${style.width}" height="20" fill="url(#a)"/>
     </g>
-    <g aria-hidden="true" fill="${style.fontColor}" font-family="${style.fontFamily}" font-size="11">
+    <g aria-hidden="true" font-size="11" font-family="${style.fontFamily}" fill="${style.fontColor}">
         <text x="6" y="15" fill="#000" opacity="0.25">Points</text>
         <text x="5" y="14">Points</text>
         <text x="${style.width - 5}" y="15" fill="#000" opacity="0.25" text-anchor="end">${points}</text>
