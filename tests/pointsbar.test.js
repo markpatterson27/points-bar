@@ -106,14 +106,57 @@ describe("templateSVG function", () => {
         expect(typeSVG).toEqual(expect.not.stringMatching(defaultSVG));
     });
 
+    // TEST STYLES
+    // #TODO: test type input. need way to differentiate svg contents between types
+
     // test style options used in SVG
     const testTypes = [
+        // type
         ['default'],
         ['badge']
     ];
-    test.each(testTypes)("style options used in SVG", (type) => {
+    const testColors = ['#000000', '#888888', '#FFFFFF'];
+    const testLabels = ['Points', 'Grade', 'Score'];
+    const testWidths = [100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200];
+    const testReverse = [false, true];
+
+    // reusable test
+    function testStyleElement(type = 'default', label = 'Points', styleOptions = {}) {
         const currentPoints = "10";
         const maxPoints = "100";
+        const style = {
+            fontFamily: 'Verdana, DejaVu Sans, sans-serif',
+            barColor: '#33CC11',
+            barBackground: '#888888',
+            fontColor: '#FFFFFF',
+            width: 140,
+            reverse: false,
+            ...styleOptions
+        };
+        const options = {
+            type: type,
+            label: label,
+            style: style
+        };
+        const svg = templateSVG(currentPoints, maxPoints, options);
+
+        expect(svg).toContain(`<svg xmlns="http://www.w3.org/2000/svg" width="${style.width}px"`);
+        expect(svg).toContain(`</svg>`);
+        expect(svg).toContain(`<title>${label}: ${currentPoints}/${maxPoints}</title>`);
+        expect(svg).toContain(`width="0%" height="100%" fill="${style.barColor}" transform="`);
+        expect(svg).toContain(`width="100%" height="100%" fill="${style.barBackground}"/>`);
+        expect(svg).toContain(`font-family="${style.fontFamily}" fill="${style.fontColor}">`);
+        if (style.reverse) {
+            expect(svg).not.toContain(`transform=""`);
+        } else {
+            expect(svg).toContain(`transform=""`);
+        }
+        return svg;
+    }
+
+    // test default style options are overridden
+    test.each(testTypes)('style options overridden in SVG: %s', (type) => {
+        const label = 'Cat';
         const style = {
             fontFamily: 'Times New Roman',
             fontColor: '#ABCDEF',
@@ -122,21 +165,98 @@ describe("templateSVG function", () => {
             width: 100,
             reverse: true,
         };
-        const options = {
-            type: type,
-            style: style
-        };
 
-        const svg = templateSVG(currentPoints, maxPoints, options);
-
-        expect(svg).toContain(`<svg`);
-        expect(svg).toContain(`</svg>`);
+        // test and return svg
+        const svg = testStyleElement(type, label, style);
+        // check that testStyleElement is integrating test vars
+        expect(svg).toContain(`${label}`);
         expect(svg).toContain(`font-family="${style.fontFamily}"`);
         expect(svg).toContain(`fill="${style.fontColor}"`);
         expect(svg).toContain(`fill="${style.barBackground}"`);
         expect(svg).toContain(`fill="${style.barColor}"`);
         expect(svg).toContain(`width="${style.width}px"`);
         expect(svg).not.toContain(`transform=""`);
+    });
+
+    // test bar color style
+    test.each(testTypes)('bar color used in SVG: %s', (type) => {
+        for (const barColor of testColors) {
+            const label = 'Points';
+            const style = {
+                barColor: barColor
+            }
+            // test and return svg
+            const svg = testStyleElement(type, label, style);
+            // check that testStyleElement is integrating test vars
+            expect(svg).toContain(barColor);
+        }
+    });
+
+    // test bar background color style
+    test.each(testTypes)('bar background color used in SVG: %s', (type) => {
+        for (const barBackground of testColors) {
+            const label = 'Points';
+            const style = {
+                barBackground: barBackground
+            }
+            // test and return svg
+            const svg = testStyleElement(type, label, style);
+            // check that testStyleElement is integrating test vars
+            expect(svg).toContain(barBackground);
+        }
+    });
+
+    // test label
+    test.each(testTypes)('label used in SVG: %s', (type) => {
+        for (const label of testLabels) {
+            const style = {}
+            // test and return svg
+            const svg = testStyleElement(type, label, style);
+            // check that testStyleElement is integrating test vars
+            expect(svg).toContain(label);
+        }
+    });
+
+    // test font color style
+    test.each(testTypes)('font color used in SVG: %s', (type) => {
+        for (const fontColor of testColors) {
+            const label = 'Points';
+            const style = {
+                fontColor: fontColor
+            }
+            // test and return svg
+            const svg = testStyleElement(type, label, style);
+            // check that testStyleElement is integrating test vars
+            expect(svg).toContain(fontColor);
+        }
+    });
+
+    // test width style
+    test.each(testTypes)('width used in SVG: %s', (type) => {
+        for (const width of testWidths) {
+            const label = 'Points';
+            const style = {
+                width: width
+            }
+            // test and return svg
+            const svg = testStyleElement(type, label, style);
+            // check that testStyleElement is integrating test vars
+            expect(svg).toContain(`${width}`);
+        }
+    });
+
+    // test reverse style
+    test.each(testTypes)('reverse used in SVG: %s', (type) => {
+        for (const reverse of testReverse) {
+            const label = 'Points';
+            const style = {
+                reverse: reverse
+            }
+            // test and return svg
+            const svg = testStyleElement(type, label, style);
+            // check that testStyleElement is integrating test vars
+            if (style.reverse) expect(svg).not.toContain(`transform=""`);
+        }
     });
 });
 
