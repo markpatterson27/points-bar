@@ -27,8 +27,8 @@
   },
   "devDependencies": {
     "@vercel/ncc": "^0.31.1",
-    "eslint": "^7.32.0",
-    "jest": "^27.2.2",
+    "eslint": "^8.0.0",
+    "jest": "^27.2.5",
     "memfs": "^3.3.0"
   },
   "jest": {
