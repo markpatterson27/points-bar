@@ -29,7 +29,7 @@
     "@vercel/ncc": "^0.31.1",
     "eslint": "^8.0.0",
     "jest": "^27.2.5",
-    "memfs": "^3.3.0"
+    "memfs": "^3.4.0"
   },
   "jest": {
     "testEnvironment": "node",
