@@ -5,9 +5,9 @@
 A GitHub action that creates an SVG points bar.
 
 <p align="center">
-    <img alt="points bar" height="36" src="../../blob/status/.github/icons/points-bar.svg" />
+    <img alt="points bar" height="36" src="../../blob/svg-build/.github/icons/points-bar.svg" />
     <br />
-    <img alt="points badge" height="20" src="../../blob/status/.github/icons/points-badge.svg" /> <img alt="points badge reversed" height="20" src="../../blob/status/.github/icons/points-badge-reversed.svg" />
+    <img alt="points badge" height="20" src="../../blob/svg-build/.github/icons/points-badge.svg" /> <img alt="points badge reversed" height="20" src="../../blob/svg-build/.github/icons/points-badge-reversed.svg" />
 </p>
 
 ## Usage
@@ -23,7 +23,7 @@ jobs:
     name: Update points bar
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       # create points bar
       - name: points bar
@@ -61,7 +61,7 @@ jobs:
 
 ### Default
 
-<img alt="points bar" height="36" src="../../blob/status/.github/icons/points-bar.svg" />
+<img alt="points bar" height="36" src="../../blob/svg-build/.github/icons/points-bar.svg" />
 
 ```yaml
 - name: points bar
@@ -73,7 +73,7 @@ jobs:
 
 ### Badge
 
-<img alt="points badge" height="20" src="../../blob/status/.github/icons/points-badge.svg" />
+<img alt="points badge" height="20" src="../../blob/svg-build/.github/icons/points-badge.svg" />
 
 ```yaml
 - name: points badge
@@ -86,7 +86,7 @@ jobs:
 
 ### Text and Bar Color
 
-<img alt="points bar color" height="36" src="../../blob/status/.github/icons/points-bar-color.svg" />
+<img alt="points bar color" height="36" src="../../blob/svg-build/.github/icons/points-bar-color.svg" />
 
 ```yaml
 - name: points bar color
@@ -101,7 +101,7 @@ jobs:
 
 ### Label
 
-<img alt="points bar custom label" height="36" src="../../blob/status/.github/icons/points-bar-custom-label.svg" />
+<img alt="points bar custom label" height="36" src="../../blob/svg-build/.github/icons/points-bar-custom-label.svg" />
 
 ```yaml
 - name: points bar
@@ -112,7 +112,7 @@ jobs:
     label: 'Score'
 ```
 
-<img alt="points badge custom label" height="20" src="../../blob/status/.github/icons/points-badge-custom-label.svg" />
+<img alt="points badge custom label" height="20" src="../../blob/svg-build/.github/icons/points-badge-custom-label.svg" />
 
 ```yaml
 - name: autograde badge
@@ -126,7 +126,7 @@ jobs:
 
 ### Width
 
-<img alt="points bar wide" height="36" src="../../blob/status/.github/icons/points-bar-wide.svg" />
+<img alt="points bar wide" height="36" src="../../blob/svg-build/.github/icons/points-bar-wide.svg" />
 
 ```yaml
 - name: points bar
@@ -139,7 +139,7 @@ jobs:
 
 ### Reversed
 
-<img alt="points badge reversed" height="20" src="../../blob/status/.github/icons/points-badge-reversed.svg" />
+<img alt="points badge reversed" height="20" src="../../blob/svg-build/.github/icons/points-badge-reversed.svg" />
 
 ```yaml
 - name: points badge reversed
@@ -151,6 +151,65 @@ jobs:
     bar-color: '#11BBCC'
     bar-background: '#88BBCC'
     reverse: true
+```
+
+## GitHub Classroom Use
+
+The points bar was original written to be used with GitHub Classroom's autograding feature to provide grade score feedback to students. To use the points bar with GitHub Classroom, replace (or edit) the `.github/workflow/classroom.yml` workflow file used by Autograding with the following:
+
+```yaml
+name: GitHub Classroom Workflow
+
+on: 
+  push:
+    branches:
+    - '*'
+    - '!badges'
+
+jobs:
+  build:
+    name: Autograding
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+
+      # add id to action so outputs can be used
+      - uses: education/autograding@v1
+        id: autograder
+        continue-on-error: true
+
+      # switch to badges branch
+      - run: git checkout badges || git checkout -b badges
+
+      # create points bar
+      - name: points bar
+        uses: markpatterson27/points-bar@v1
+        with:
+          points: ${{ steps.autograder.outputs.points }}
+          path: '.github/badges/points-bar.svg'
+
+      # commit and push badges if badges have changed
+      - name: Commit changes to points bar
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add '.github/badges/points-bar.svg'
+          git commit -m "Add/Update points bar" || exit 0
+          git push origin badges
+```
+
+To display the points bar, add the following to the top of the assignment README:
+
+```
+![Points bar](../../blob/badges/.github/badges/points-bar.svg)
+```
+
+If you want to float the points bar to the right, use the following instead:
+
+```html
+<img alt="points bar" align="right" height="36" src="../../blob/status/.github/badges/points-bar.svg" />
 ```
 
 ## Alternatives

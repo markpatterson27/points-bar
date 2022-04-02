@@ -38,5 +38,5 @@ runs:
   main: "dist/index.js"
 
 branding:
-  icon: check
+  icon: award
   color: green
