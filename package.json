@@ -26,10 +26,10 @@
     "@actions/core": "^1.6.0"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.33.4",
-    "eslint": "^8.14.0",
-    "jest": "^28.0.2",
-    "memfs": "^3.4.1"
+    "@vercel/ncc": "^0.34.0",
+    "eslint": "^8.18.0",
+    "jest": "^28.1.1",
+    "memfs": "^3.4.7"
   },
   "jest": {
     "testEnvironment": "node",
