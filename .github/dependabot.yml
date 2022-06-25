@@ -6,8 +6,7 @@ updates:
     directory: "/"
     # Check the npm registry for updates every day (weekdays)
     schedule:
-      interval: "weekly"
-      day: "friday"
+      interval: "monthly"
     # target-branch: dependency-updates
     # labels:
     #   - "npm dependencies"
@@ -17,7 +16,6 @@ updates:
     # default location of `.github/workflows`
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "friday"
+      interval: "monthly"
     # labels:
     #   - "workflow dependencies"
