@@ -1,6 +1,6 @@
 {
   "name": "points-bar",
-  "version": "1.0.0",
+  "version": "1.4.1",
   "description": "A GitHub action that creates an SVG points bar.",
   "main": "src/index.js",
   "directories": {
@@ -23,13 +23,13 @@
   },
   "homepage": "https://github.com/markpatterson27/points-bar#readme",
   "dependencies": {
-    "@actions/core": "^1.9.1"
+    "@actions/core": "^1.10.0"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.34.0",
-    "eslint": "^8.23.0",
-    "jest": "^29.0.2",
-    "memfs": "^3.4.7"
+    "eslint": "^8.26.0",
+    "jest": "^29.2.2",
+    "memfs": "^3.4.9"
   },
   "jest": {
     "testEnvironment": "node",
