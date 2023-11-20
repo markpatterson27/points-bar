@@ -212,6 +212,47 @@ If you want to float the points bar to the right, use the following instead:
 <img alt="points bar" align="right" height="36" src="../../blob/status/.github/badges/points-bar.svg" />
 ```
 
+## Using the Reusable Points Bar Workflow
+
+This repository includes a [reusable workflow](https://docs.github.com/en/actions/using-workflows/reusing-workflows) for generating a points bar. The workflow includes steps to commit and push the updated points bar back to the repository.
+
+An example of how to use the reusable workflow:
+
+```yaml
+name: My Workflow
+on:
+  push:
+    branches:
+    - '*'
+    - '!status'
+
+jobs:
+  update-points-bar:
+    uses: markpatterson27/points-bar/.github/workflows/reusable-workflow.yml@main
+    permissions:
+      contents: write
+    with:
+      points: '10/20'
+      path: '.github/activity-icons/points-bar.svg'
+      type: 'bar'
+      bar-color: '#4c1'
+      bar-background: '#555'
+      font-color: '#aaa'
+      label: 'Points'
+      width: '100'
+      reverse: false
+      branch: status
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
+```
+
+Inputs for the reusable workflow follow the action inputs described above with the following additional inputs:
+
+| Input Name | Required | Default | Description |
+|---|---|---|---|
+| `branch` | yes | 'main' | Name of branch to commit the points bar to. |
+| `token` | yes |  | Token with permissions to commit and push updated points bar back to the repository. |
+
 ## Alternatives
 
 [Badge Action](https://github.com/emibcn/badge-action) creates a customizable badge with many styling options. Useful if you want a customizable badge and don't need a progress style points bar.
