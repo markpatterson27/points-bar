@@ -1,0 +1,94 @@
+name: Reusable Points Bar Workflow
+on:
+  workflow_call:
+    inputs:
+      points:
+        description: "Points string separated with a / slash."
+        required: true
+        type: string
+      path:
+        description: "File path to save the generated SVG to."
+        required: true
+        type: string
+      type:
+        description: "Style of bar to generate; either bar or badge."
+        default: "default"
+        required: false
+        type: string
+      bar-color:
+        description: "Color to use for the points bar."
+        required: false
+        type: string
+      bar-background:
+        description: "Background color for the points bar."
+        required: false
+        type: string
+      font-color:
+        description: "Color to use for text."
+        required: false
+        type: string
+      label:
+        description: "Text to use for label part of points bar."
+        default: "Points"
+        required: false
+        type: string
+      width:
+        description: "Bar/badge width."
+        required: false
+        type: string
+      reverse:
+        description: "Reverse the progress direction of the bar. i.e. Progress bar moves from right to left."
+        default: false
+        required: false
+        type: boolean
+      branch:
+        description: "Branch to use for the commit."
+        default: "main"
+        required: false
+        type: string
+    secrets:
+      token:
+        description: "A token to authenticate with."
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  points-bar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.token }}
+          fetch-depth: 0
+
+      - name: (Create) Switch to branch
+        run: git checkout ${{ inputs.branch }} || git checkout -b ${{ inputs.branch }}
+
+      - name: Make directory
+        run: mkdir -p $(dirname ${{ inputs.path }})
+
+      - name: Points Bar
+        uses: markpatterson27/points-bar@v1
+        with:
+          points: ${{ inputs.points }}
+          path: ${{ inputs.path }}
+          type: ${{ inputs.type }}
+          bar-color: ${{ inputs.bar-color }}
+          bar-background: ${{ inputs.bar-background }}
+          font-color: ${{ inputs.font-color }}
+          label: ${{ inputs.label }}
+          width: ${{ inputs.width }}
+          reverse: ${{ inputs.reverse }}
+
+      - name: Commit changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.token }}
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add ${{ inputs.path }}
+          git commit -m "Update points bar" || exit 0
+          git push origin ${{ inputs.branch }}
