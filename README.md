@@ -173,7 +173,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+          fetch-depth: 0 # otherwise, you will fail to push refs to dest repo
 
       # add id to action so outputs can be used
       - uses: education/autograding@v1
@@ -209,7 +209,7 @@ To display the points bar, add the following to the top of the assignment README
 If you want to float the points bar to the right, use the following instead:
 
 ```html
-<img alt="points bar" align="right" height="36" src="../../blob/status/.github/badges/points-bar.svg" />
+<img alt="points bar" align="right" height="36" src="../../blob/badges/.github/badges/points-bar.svg" />
 ```
 
 ## Using the Reusable Points Bar Workflow
@@ -224,7 +224,7 @@ on:
   push:
     branches:
     - '*'
-    - '!status'
+    - '!badges'
 
 jobs:
   update-points-bar:
@@ -233,7 +233,7 @@ jobs:
       contents: write
     with:
       points: '10/20'
-      path: '.github/activity-icons/points-bar.svg'
+      path: '.github/badges/points-bar.svg'
       type: 'bar'
       bar-color: '#4c1'
       bar-background: '#555'
@@ -241,7 +241,7 @@ jobs:
       label: 'Points'
       width: '100'
       reverse: false
-      branch: status
+      branch: badges
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
 ```
